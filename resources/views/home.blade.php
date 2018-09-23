@@ -25,7 +25,7 @@
                                       <div id="messages" ></div>
                                     </div>
                                     <div class="col-lg-8" >
-                                            <form action="sendmessage" method="POST">
+                                            <form action="send" method="POST">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" >
                                                 <input type="hidden" name="user" value="{{ Auth::user()->name }}" >
                                                 <textarea class="form-control msg"></textarea>
@@ -44,16 +44,24 @@
     </div>
 </div>
 @endsection
-@section('content')
-<script>
-        var socket = io('http://127.0.0.1:3000');
-        socket.on('event: App\\Events\\MessageSent', function (data) {
+@section('js')
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 
+<script>
+        var socket = io('http://localhost:3000');
+        socket.on('message-sent:App\\Events\\MessageSent', function (data) {
             data = jQuery.parseJSON(data);
             console.log(data);
             $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
           });
+          socket.on('hi', function (data) {
+
+            console.log(data);
+          });
         $(".send-msg").click(function(e){
+            debugger;
             e.preventDefault();
             var token = $("input[name='_token']").val();
             var user = $("input[name='user']").val();

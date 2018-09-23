@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new MessageSent('Hello there'));
+        event(new MessageSent(date('Y-m-d H:i:s')));
         return view('home');
     }
 
