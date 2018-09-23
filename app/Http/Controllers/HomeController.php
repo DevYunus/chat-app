@@ -24,7 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new MessageSent());
+        event(new MessageSent('Hello there'));
+        return view('home');
+    }
+
+    public function send()
+    {
+        event(new MessageSent(request()->input('message')));
         return view('home');
     }
 }

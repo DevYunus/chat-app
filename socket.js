@@ -9,8 +9,8 @@ redis.subscribe('message-sent');
 
 redis.on('message', function(channel, message) {
     message = JSON.parse(message);
-    console.log(channel, message);
-    //io.emit(channel + ':' + message.event, message.data);
+    // console.log(channel, message);
+    io.emit(channel + ':' + message.event, message.data);
 });
 
 server.listen(3000);
