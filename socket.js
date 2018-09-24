@@ -5,14 +5,13 @@ var io = require('socket.io')(server);
 var Redis = require('ioredis');
 var redis = new Redis();
 
-redis.subscribe('message-sent');
+server.listen(3000, 'localhost');
+
+redis.subscribe('messagesent');
 
 redis.on('message', function(channel, message) {
+    console.log(channel, message);
     message = JSON.parse(message);
-    console.log(message.event);
     io.emit(channel + ':' + message.event, message.data);
-    io.emit('hi', 'hh');
-    console.log('dwd');
+    io.emit('hi', 'wdw');
 });
-
-server.listen(3000);

@@ -24,13 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new MessageSent(date('Y-m-d H:i:s')));
         return view('home');
     }
 
     public function send()
     {
         event(new MessageSent(request()->input('message')));
-        return view('home');
+        return response()->json([
+            'message' => request()->input('message'),
+        ]);
     }
 }

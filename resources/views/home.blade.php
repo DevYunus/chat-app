@@ -30,7 +30,7 @@
                                                 <input type="hidden" name="user" value="{{ Auth::user()->name }}" >
                                                 <textarea class="form-control msg"></textarea>
                                                 <br/>
-                                                <input type="button" value="Send" class="btn btn-success send-msg">
+                                                <input type="button" value="Send" onclick="send_msg()" class="btn btn-success ">
                                             </form>
                                     </div>
                                 </div>
@@ -45,24 +45,9 @@
 </div>
 @endsection
 @section('js')
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 
 <script>
-        var socket = io('http://localhost:3000');
-        socket.on('message-sent:App\\Events\\MessageSent', function (data) {
-            data = jQuery.parseJSON(data);
-            console.log(data);
-            $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
-          });
-          socket.on('hi', function (data) {
-
-            console.log(data);
-          });
-        $(".send-msg").click(function(e){
-            debugger;
-            e.preventDefault();
+function send_msg(){
             var token = $("input[name='_token']").val();
             var user = $("input[name='user']").val();
             var msg = $(".msg").val();
@@ -73,14 +58,21 @@
                     dataType: "json",
                     data: {'_token':token,'message':msg,'user':user},
                     success:function(data){
-                        console.log(data);
                         $(".msg").val('');
                     }
                 });
             }else{
                 alert("Please Add Message.");
             }
-        })
+        }
+
+        var socket = io('127.0.0.1:3000');
+          socket.on('messagesent:App\\Events\\MessageSent', function (data) {
+              alert(44);
+            data = jQuery.parseJSON(data);
+            $("#messages").append( "<strong>"+data.user+":</strong><p>SDSDG</p>" );
+          });
+
     </script>
 @endsection
 
