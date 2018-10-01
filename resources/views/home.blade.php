@@ -65,14 +65,7 @@ function send_msg(){
                 alert("Please Add Message.");
             }
         }
-
-        var socket = io('127.0.0.1:3000');
-          socket.on('messagesent:App\\Events\\MessageSent', function (data) {
-              alert(44);
-            data = jQuery.parseJSON(data);
-            $("#messages").append( "<strong>"+data.user+":</strong><p>SDSDG</p>" );
-          });
-
     </script>
+
 @endsection
 

@@ -13,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $update;
+    public $user;
     public $message;
     /**
      * Create a new event instance.
@@ -22,7 +22,7 @@ class MessageSent implements ShouldBroadcast
      */
     public function __construct($message)
     {
-        $this->update = auth()->user()->name;
+        $this->user = auth()->user()->name;
         $this->message = $message;
     }
 
@@ -34,6 +34,6 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn()
     {
         //return new PrivateChannel('message-sent');
-        return ['messagesent'];
+        return ['message-sent'];
     }
 }
