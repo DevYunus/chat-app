@@ -7,7 +7,7 @@
 // import VueSocketio from 'vue-socket.io';
 import io from 'socket.io-client';
 
-const socket = io('https://localhost:8890');
+const socket = io('http://localhost:8890');
 
 socket.on('connect', function(){
     console.log('connected on local');
